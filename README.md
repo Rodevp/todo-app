@@ -4,3 +4,5 @@ al momento de completarlas.
 Tecnologias usadas.
 - React (React Native)
 - Expo
+
+[image-123986672.jpg](https://postimg.cc/hJfhw7mh)
