@@ -1,58 +1,65 @@
-import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Task from './components/Task';
+import { useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Task from "./components/Task";
 
 export default function App() {
-
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
 
   const handleAddTask = () => {
-    setTasks([...tasks, task])
-    setTask("")
-  }
+    setTasks([...tasks, task]);
+    setTask("");
+  };
+
+  const completeTask = (index) => {
+    const items = [...tasks];
+    items.splice(index, 1);
+    setTasks(items);
+  };
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.taskContainer}>
-        
         <Text style={styles.title}> Lista de tareas </Text>
-        
+
         <View style={styles.items}>
-          {
-            tasks.map((item, index) => {
-              return <Task text={item} key={index}  />
-            })
-          }
+          {tasks.map((item, index) => {
+            return (
+              <TouchableOpacity key={index} onPress={() => completeTask(index)}>
+                <Task text={item} />
+              </TouchableOpacity>
+            );
+          })}
         </View>
-
       </View>
-
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.taskAddContainer}
       >
-        <TextInput  style={styles.input} placeholder="Escribe una tarea"
-          onChangeText={ text => setTask(text) }
+        <TextInput
+          style={styles.input}
+          placeholder="Escribe una tarea"
+          onChangeText={(text) => setTask(text)}
           value={task}
         />
 
-        <View
-          style={styles.btnContainer}
-        >
-          <TouchableOpacity
-            onPress={handleAddTask}
-          >
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={handleAddTask}>
             <View style={styles.btnWrapper}>
-              <Text style={styles.btn} >+</Text>
+              <Text style={styles.btn}>+</Text>
             </View>
           </TouchableOpacity>
         </View>
-
       </KeyboardAvoidingView>
-
     </View>
   );
 }
@@ -60,18 +67,18 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: "#E8EAED",
   },
   taskContainer: {
     paddingTop: 75,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   items: {
-    marginTop: 30
+    marginTop: 30,
   },
   taskAddContainer: {
     position: "absolute",
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
   },
   input: {
     paddingVertical: 15,
@@ -88,11 +95,9 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     borderColor: "#c0c0c0",
     borderWidth: 1,
-    width: 240
+    width: 240,
   },
-  btnContainer: {
-
-  },
+  btnContainer: {},
   btnWrapper: {
     width: 60,
     height: 60,
@@ -104,6 +109,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   btn: {
-    fontSize: 30
-  }
+    fontSize: 30,
+  },
 });
