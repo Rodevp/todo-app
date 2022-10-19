@@ -1,7 +1,17 @@
+import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
+
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([])
+
+  const handleAddTask = () => {
+    setTasks([...tasks, task])
+    setTask("")
+  }
+
   return (
     <View style={styles.container}>
       
@@ -10,10 +20,11 @@ export default function App() {
         <Text style={styles.title}> Lista de tareas </Text>
         
         <View style={styles.items}>
-          <Task text="Task 1" />
-          <Task text="Task 2" />
-          <Task text="Task 3" />
-          <Task text="Task 4" />
+          {
+            tasks.map((item, index) => {
+              return <Task text={item} key={index}  />
+            })
+          }
         </View>
 
       </View>
@@ -23,12 +34,17 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.taskAddContainer}
       >
-        <TextInput  style={styles.input} placeholder="Escribe una tarea"  />
+        <TextInput  style={styles.input} placeholder="Escribe una tarea"
+          onChangeText={ text => setTask(text) }
+          value={task}
+        />
 
         <View
           style={styles.btnContainer}
         >
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleAddTask}
+          >
             <View style={styles.btnWrapper}>
               <Text style={styles.btn} >+</Text>
             </View>
