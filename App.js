@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   items: {
-
+    marginTop: 30
   }
 });
